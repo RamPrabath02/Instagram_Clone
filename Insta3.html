@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instagram</title>
+    <style>
+      .main-grid {
+        display: grid;
+        grid-template-columns: 725px 525px;
+        margin: 0 auto;
+      }
+
+      .story {
+        display: flex;
+        flex: 1;
+        padding: 10px 0;
+
+        border-bottom: 1px solid #dbdbdb;
+        padding-left: 10px;
+      }
+      .stories-image {
+        margin-right: 10px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        font-weight: lighter;
+        font-size: 11px;
+      }
+      .stories-image img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        margin-bottom: 4px;
+        background: linear-gradient(
+          45deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+      }
+      .sidebar {
+        position: fixed;
+        top: 65px;
+      }
+      .sidebar-items {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      .sidebar-items:hover {
+        background-color: #d2d2d2;
+        cursor: pointer;
+      }
+      .sidebar-items :first-child :hover {
+        background-color: none;
+        cursor: pointer;
+      }
+      .no-hover:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+      .sidebar-items img {
+        margin-right: 15px;
+        width: 30px;
+      }
+      .posts {
+        margin: 0 auto;
+        border: 1px solid #dbdbdb;
+        background-color: white;
+        margin-bottom: 20px;
+        border-radius: 0px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-left: 250px;
+        border-top: 0;
+      }
+      .posts-content {
+        padding-left: 80px;
+        padding-right: 80px;
+        padding-top: 40px;
+      }
+      .post-header {
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+      }
+      .post-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+      .post-header div {
+        margin-left: 10px;
+        font-weight: bold;
+      }
+      .post-img img {
+        width: 100%;
+        height: auto;
+        border-radius: 3px;
+      }
+      .post-icons {
+        display: flex;
+        padding: 10px 0;
+      }
+      .post-icons img {
+        width: 24px;
+        cursor: pointer;
+      }
+      .post-icons div {
+        margin-right: 10px;
+      }
+      .post-likes {
+        font-weight: bold;
+        margin: 5px 0;
+      }
+      .post-caption {
+        display: flex;
+        font-size: 14px;
+      }
+      .post-caption div {
+        margin-right: 5px;
+      }
+      .post-comments {
+        font-size: 14px;
+        color: #8e8e8e;
+      }
+      .view-all-comments {
+        color: #8e8e8e;
+        cursor: pointer;
+      }
+      .add-comment {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #dbdbdb;
+      }
+      .add-comment input {
+        width: 100%;
+        border: none;
+        padding: 5px;
+      }
+      .add-comment img {
+        width: 24px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      .follow-suggestions {
+        padding: 10px;
+        border-radius: 5px;
+        margin-left: 200px;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+      .my-profile {
+        display: flex;
+        width: auto;
+        padding: 8px;
+      }
+      .profile-username {
+        margin-top: 4px;
+      }
+      .suggested-profile {
+        padding: 10px;
+        display: flex;
+        color: #8e8e8e;
+      }
+      body {
+        font-family: "Proxima Nova", sans-serif;
+        font-size: 14px;
+        background-color: #fafafa;
+        margin: 0;
+      }
+      .notification-number {
+        position: absolute;
+        margin-bottom: 18px;
+        margin-left: 18px;
+      }
+      /* @media (max-width: 1000px){  
+            .main-grid{
+                display: grid ;
+                grid-template-columns: 0fr 2fr 1fr;
+            }
+             */
+    </style>
+  </head>
+  <body>
+    <div class="main-grid">
+      <div class="sidebar">
+        <div class="sidebar-items no-hover">
+          <img
+            src="../Assets/instagram-1.svg"
+            alt="Instagram Logo"
+            style="width: 100px"
+          />
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/icons8-home.svg" alt="Home" />Home
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/icons8-search (1).svg" alt="Search" />Search
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/explore.jpg" alt="Explore" />Explore
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/icons8-reels.svg" alt="Reels" />Reels
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/message-removebg-preview.png" alt="Message" />
+          <img
+            src="../Assets/Eo_circle_red_number-1.svg.png"
+            alt="1 Notification"
+            class="notification-number"
+            style="width: 20px"
+          />Message
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/heart.svg" alt="Notification" />Notification
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/icons8-plus.svg" alt="Create" />Create
+        </div>
+        <div class="sidebar-items">
+          <img
+            src="../Assets/dp1.png"
+            alt="Profile Picture"
+            style="border-radius: 50%"
+          />Profile
+        </div>
+        <div class="sidebar-items">
+          <img src="../Assets/icons8-hamburger-menu.svg" alt="Menu Icon" />Menu
+        </div>
+      </div>
+      <div class="posts">
+        <div class="story" style="font-weight: lighter">
+          <div class="stories-image">
+            <img src="../Assets/dp1.png" alt="Story 1" />
+            <img
+              src="../Assets/left-arrow-backup-2-svgrepo-com.svg"
+              style="
+                position: absolute;
+                background-color: none;
+                width: 20px;
+                height: 20px;
+                border: 0;
+                background: 0;
+                padding-top: 20px;
+                padding-right: 40px;
+              "
+            />
+            <div>ramprabath_</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user1.jpg" alt="Story 2" />
+            <div style="align-items: center">anish_03</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user2.jpg" alt="Story 3" />
+            <div class="align-items:center">Shruthi_IG</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user3.jpg" alt="Story 4" />
+            <div>Shriram_...</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user7.jpg" alt="Story 5" />
+            <div>Raghav_...</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user4.jpg" alt="Story 6" />
+            <div>Suba_Ra...</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user5.jpg" alt="Story 7" />
+            <div>Sukesh_s...</div>
+          </div>
+          <div class="stories-image">
+            <img src="../Assets/user6.jpg" alt="Story 8" />
+            <img
+              src="../Assets/right-arrow-backup-2-svgrepo-com.svg"
+              style="
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border: 0;
+                background: 0;
+                padding-top: 20px;
+                padding-left: 40px;
+              "
+            />
+
+            <div>cool_krith...</div>
+          </div>
+        </div>
+        <div class="posts-content">
+          <div class="post-header">
+            <img src="../Assets/dp1.png" alt="Profile Picture" />
+            <div>Ram Prabath</div>
+            <div>6h ago</div>
+            <div style="margin-left: auto">⋮</div>
+          </div>
+          <div class="post-img">
+            <img src="../Assets/20211001211659_IMG_6825.JPG" alt="Post Image" />
+          </div>
+          <div class="post-icons">
+            <div><img src="../Assets/heart.png" alt="Like Icon" /></div>
+            <div>
+              <img src="../Assets/comment-icon.png" alt="Comment Icon" />
+            </div>
+            <div><img src="../Assets/share-icon.png" alt="Share Icon" /></div>
+            <div style="margin-left: auto; margin-right: 0px">
+              <img src="../Assets/save-instagram.png" alt="Save Icon" />
+            </div>
+          </div>
+          <div class="post-likes">302 likes</div>
+          <div class="post-caption">
+            <div><b>Ram Prabath</b></div>
+            <div>Beautiful Parrot Over the Ocean Sky</div>
+          </div>
+          <div class="post-comments">
+            <div class="view-all-comments">View all 42 comments</div>
+            <div class="add-comment">
+              <input type="text" placeholder="Add a comment..." />
+              <img src="../Assets/emoji.png" alt="Emoji Icon" />
+            </div>
+          </div>
+        </div>
+        <div class="posts-content">
+          <div class="post-header">
+            <img src="../Assets/user2.jpg" alt="Profile Picture" />
+            <div>Shruthi</div>
+            <div>10h ago</div>
+            <div style="margin-left: auto; margin-right: 0px">⋮</div>
+          </div>
+          <div class="post-img">
+            <img
+              src="../Assets/fashion-design-ads-template-879d13cb40f302e2a02d96bf87fdf422_screen.jpg"
+              alt="Post Image"
+            />
+          </div>
+          <div class="post-icons">
+            <div><img src="../Assets/heart.png" alt="Like Icon" /></div>
+            <div>
+              <img src="../Assets/comment-icon.png" alt="Comment Icon" />
+            </div>
+            <div><img src="../Assets/share-icon.png" alt="Share Icon" /></div>
+            <div style="margin-left: auto; margin-right: 0px">
+              <img src="../Assets/save-instagram.png" alt="Save Icon" />
+            </div>
+          </div>
+          <div class="post-likes">275 likes</div>
+          <div class="post-caption">
+            <div><b>Shruthi</b></div>
+            <div>Join my fashion style course! link in my bio!</div>
+          </div>
+          <div class="post-comments">
+            <div class="view-all-comments">View all 21 comments</div>
+            <div class="add-comment">
+              <input type="text" placeholder="Add a comment..." />
+              <img src="../Assets/emoji.png" alt="Emoji Icon" />
+            </div>
+          </div>
+        </div>
+        <div class="posts-content">
+          <div class="post-header">
+            <img src="../Assets/user4.jpg" alt="Profile Picture" />
+            <div>Suba Ranjan</div>
+            <div>20h ago</div>
+            <div style="margin-left: auto; margin-right: 0px">⋮</div>
+          </div>
+          <div class="post-img">
+            <img
+              src="../Assets/German-Shepherd-1358309706-1024x591.png"
+              alt="Post Image"
+            />
+          </div>
+          <div class="post-icons">
+            <div><img src="../Assets/heart.png" alt="Like Icon" /></div>
+            <div>
+              <img src="../Assets/comment-icon.png" alt="Comment Icon" />
+            </div>
+            <div><img src="../Assets/share-icon.png" alt="Share Icon" /></div>
+            <div style="margin-left: auto; margin-right: 0px">
+              <img src="../Assets/save-instagram.png" alt="Save Icon" />
+            </div>
+          </div>
+          <div class="post-likes">88 likes</div>
+          <div class="post-caption">
+            <div><b>Suba Rajan</b></div>
+            <div>Hi Scooby!!!</div>
+          </div>
+          <div class="post-comments">
+            <div class="view-all-comments">View all 8 comments</div>
+            <div class="add-comment">
+              <input type="text" placeholder="Add a comment..." />
+              <img src="../Assets/emoji.png" alt="Emoji Icon" />
+            </div>
+          </div>
+        </div>
+        <div class="posts-content">
+          <div class="post-header">
+            <img src="../Assets/user8.jpg" alt="Profile Picture" />
+            <div>Sanjana Balaji</div>
+            <div>2d ago</div>
+            <div style="margin-left: auto; margin-right: 0px">⋮</div>
+          </div>
+          <div class="post-img">
+            <img
+              src="../Assets/burger-with-melted-cheese.jpg"
+              alt="Post Image"
+            />
+          </div>
+          <div class="post-icons">
+            <div><img src="../Assets/heart.png" alt="Like Icon" /></div>
+            <div>
+              <img src="../Assets/comment-icon.png" alt="Comment Icon" />
+            </div>
+            <div><img src="../Assets/share-icon.png" alt="Share Icon" /></div>
+            <div style="margin-left: auto; margin-right: 0px">
+              <img src="../Assets/save-instagram.png" alt="Save Icon" />
+            </div>
+          </div>
+          <div class="post-likes">97 likes</div>
+          <div class="post-caption">
+            <div><b>Sanjana Balaji</b></div>
+            <div>Check out our brand new spicy burger @burgerstop</div>
+          </div>
+          <div class="post-comments">
+            <div class="view-all-comments">View all 7 comments</div>
+            <div class="add-comment">
+              <input type="text" placeholder="Add a comment..." />
+              <img src="../Assets/emoji.png" alt="Emoji Icon" />
+            </div>
+          </div>
+        </div>
+        <div class="posts-content">
+          <div class="post-header">
+            <img src="../Assets/dp1.png" alt="Profile Picture" />
+            <div>Ram Prabath</div>
+            <div>1w ago</div>
+            <div style="margin-left: auto; margin-right: 0px">⋮</div>
+          </div>
+          <div class="post-img">
+            <img src="../Assets/IMG_8576.JPG" alt="Post Image" />
+          </div>
+          <div class="post-icons">
+            <div><img src="../Assets/heart.png" alt="Like Icon" /></div>
+            <div>
+              <img src="../Assets/comment-icon.png" alt="Comment Icon" />
+            </div>
+            <div><img src="../Assets/share-icon.png" alt="Share Icon" /></div>
+            <div style="margin-left: auto; margin-right: 0px">
+              <img src="../Assets/save-instagram.png" alt="Save Icon" />
+            </div>
+          </div>
+          <div class="post-likes">412 likes</div>
+          <div class="post-caption">
+            <div><b>Ram Prabath</b></div>
+            <div>Perfect timed shot #photography #canon200d #800mm</div>
+          </div>
+          <div class="post-comments">
+            <div class="view-all-comments">View all 51 comments</div>
+            <div class="add-comment">
+              <input type="text" placeholder="Add a comment..." />
+              <img src="../Assets/emoji.png" alt="Emoji Icon" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="follow-suggestions">
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/dp1.png"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Ram Prabath</div>
+            <div style="margin-top: 4px; color: #8e8e8e">@ramprabath_</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+
+        <div class="suggested-profile">
+          <div>Suggested for you</div>
+          <div style="margin-left: auto; color: black">See All</div>
+        </div>
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/user4.jpg"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Suba Rajan</div>
+            <div style="margin-top: 4px; color: #8e8e8e">Suggested for you</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/user6.jpg"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Krithik</div>
+            <div style="margin-top: 4px; color: #8e8e8e">Suggested for you</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/user8.jpg"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Sanjana Balaji</div>
+            <div style="margin-top: 4px; color: #8e8e8e">Suggested for you</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/user2.jpg"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Shruthi</div>
+            <div style="margin-top: 4px; color: #8e8e8e">Popular</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+        <div class="my-profile">
+          <div>
+            <img
+              src="../Assets/user7.jpg"
+              alt="Profile Picture"
+              style="border-radius: 50%; width: 45px; margin-right: 10px"
+            />
+          </div>
+          <div class="profile-username">
+            <div>Raghav</div>
+            <div style="margin-top: 4px; color: #8e8e8e">Suggested for you</div>
+          </div>
+          <div
+            style="
+              margin-left: auto;
+              color: rgb(108, 108, 255);
+              margin-top: 8px;
+            "
+          >
+            follow
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
